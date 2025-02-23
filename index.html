@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NotesApp</title>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css -->
+    <link rel="stylesheet" href="./src/styles/style.css" />
+  </head>
+  <body class="grid">
+    <header>
+      <nav-bar />
+    </header>
+    <main>
+      <aside>
+        <button id="add-note-button">Add Note</button>
+      </aside>
+      <div id="notesContainer"></div>
+    </main>
+    <footer>
+      <foot-er company-name="Bukan Dicoding" theme="primary" />
+    </footer>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
