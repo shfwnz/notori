@@ -26,4 +26,5 @@ const view = () => {
   });
 };
 
+//Export
 export default view;
