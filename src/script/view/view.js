@@ -10,6 +10,8 @@ const view = async () => {
 
   const displayNotes = async () => {
     notesContainer.innerHTML = "";
+    const loadingIndicator = document.createElement("loading-indicator");
+    notesContainer.appendChild(loadingIndicator);
 
     try {
       const notesData = await getNotes();
@@ -18,6 +20,8 @@ const view = async () => {
         throw new Error("Data format is incorrect");
       }
 
+      notesContainer.innerHTML = "";
+
       const notesList = document.createElement("notes-list");
       notesList.notes = notesData;
 
@@ -25,16 +29,26 @@ const view = async () => {
         try {
           const note_id = event.detail;
 
+          const loadingIndicator = document.createElement("loading-indicator");
+          notesContainer.appendChild(loadingIndicator);
+
           await deleteNote(note_id);
           await displayNotes();
+
+          notesContainer.innerHTML = "";
         } catch (error) {
           console.error("Failed delete data:", error);
+          notesContainer.innerHTML = "";
+          notesContainer.textContent =
+            "Failed to delete note. Please try again.";
         }
       });
 
       notesContainer.appendChild(notesList);
     } catch (error) {
       console.error("Failed to load data:", error);
+      notesContainer.innerHTML = "";
+      notesContainer.textContent = "Failed to load notes. Please try again.";
     }
   };
   await displayNotes();
@@ -44,7 +58,12 @@ const view = async () => {
     document.body.appendChild(formNotes);
 
     formNotes.addEventListener("note-added", async () => {
+      const loadingIndicator = document.createElement("loading-indicator");
+      notesContainer.appendChild(loadingIndicator);
+
       await displayNotes();
+
+      notesContainer.innerHTML = "";
     });
   });
 };
