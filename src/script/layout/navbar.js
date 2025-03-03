@@ -1,3 +1,5 @@
+import notes from "../../assets/img/notes.png";
+
 class Navbar extends HTMLElement {
   _shadowRoot = null;
   _style = null;
@@ -38,7 +40,7 @@ class Navbar extends HTMLElement {
   render() {
     this._shadowRoot.innerHTML = `
         <div class="brand-name">
-          <img src="../src/public/img/notes.png" alt="Notoria Logo">
+          <img src="${notes}" alt="Notoria Logo">
           <h1>Notoria</h1>
         </div>
       `;
