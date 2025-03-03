@@ -59,7 +59,7 @@ const updateNote = async (note_id, updatedNote) => {
 const deleteNote = async (note_id) => {
   try {
     const response = await fetch(`${baseUrl}/notes/${note_id}`, {
-      method: "PUT",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
 

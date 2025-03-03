@@ -15,26 +15,6 @@ class NotesList extends HTMLElement {
     this._shadowRoot = this.attachShadow({ mode: "open" });
     this._style = document.createElement("style");
     this._notes = [];
-    this._style.textContent = `
-        :host {
-            display: block;
-            margin: 10px 20px;
-        }
-        
-        .list {
-            display: grid;
-            grid-template-columns: ${"1fr ".repeat(this._column)};
-        
-            gap: ${this.gutter}px;
-        }
-
-        @media only screen and (max-width: 700px) {
-            .list { 
-                grid-template-columns: 1fr;
-            }
-        }
-    `;
-
     this.render();
   }
 
@@ -45,8 +25,18 @@ class NotesList extends HTMLElement {
 
   set column(value) {
     const newValue = Number(value);
+    if (!isNaN(newValue)) {
+      this._column = newValue;
+      this.render();
+    }
+  }
 
-    this._column = value;
+  set gutter(value) {
+    const newValue = Number(value);
+    if (!isNaN(newValue)) {
+      this._gutter = newValue;
+      this.render();
+    }
   }
 
   get column() {
@@ -58,6 +48,25 @@ class NotesList extends HTMLElement {
   }
 
   render() {
+    this._style.textContent = `
+      :host {
+        display: block;
+        margin: 10px 20px;
+      }
+      
+      .list {
+        display: grid;
+        grid-template-columns: ${"1fr ".repeat(this._column).trim()};
+        gap: ${this._gutter}px;
+      }
+
+      @media only screen and (max-width: 700px) {
+        .list { 
+          grid-template-columns: 1fr;
+        }
+      }
+    `;
+
     this._shadowRoot.innerHTML = "";
     this._shadowRoot.appendChild(this._style);
 
@@ -67,6 +76,11 @@ class NotesList extends HTMLElement {
     this._notes.forEach((note) => {
       const noteElement = document.createElement("notes-item");
       noteElement.notes = note;
+
+      noteElement.addEventListener("delete", (event) => {
+        this.dispatchEvent(new CustomEvent("delete", { detail: event.detail }));
+      });
+
       listContainer.appendChild(noteElement);
     });
 

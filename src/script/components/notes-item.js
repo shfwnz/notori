@@ -128,12 +128,12 @@ class NotesItem extends HTMLElement {
                 }</p>
             </div>
             <div class="actions">
-                <button class="delete">Delete</button>
-                <button class="edit">Edit</button>
-                <button class="archive">${
+                <button id="deleteButton" class="delete">Delete</button>
+                <button id="editButton" class="edit">Edit</button>
+                <button id="archiveButton" class="archive">${
                   this._notes.archived ? "Unarchive" : "Archive"
                 }</button>
-                <button class="see-more">See More</button>
+                <button id="seeMoreButton" class="see-more">See More</button>
             </div>
         </div>
       </div>

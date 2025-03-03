@@ -18,6 +18,7 @@ body {
 header {
   position: sticky;
   top: 0;
+  z-index: 99;
 }
 
 main #add-note-button {

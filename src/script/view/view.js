@@ -1,8 +1,12 @@
-import { getNotes } from "../data/notes-data-api.js";
+import { deleteNote, getNotes } from "../data/notes-data-api.js";
 
 const view = async () => {
   const notesContainer = document.querySelector("#notesContainer");
   const addButton = document.querySelector("#add-note-button");
+  const deleteButton = document.querySelector("#deleteButton");
+  const editButton = document.querySelector("#editButton");
+  const archiveButton = document.querySelector("#archiveButton");
+  const seeMoreButton = document.querySelector("#seeMoreButton");
 
   const displayNotes = async () => {
     notesContainer.innerHTML = "";
@@ -14,10 +18,20 @@ const view = async () => {
         throw new Error("Data format is incorrect");
       }
 
-      console.log("Data Notes:", notesData);
-
       const notesList = document.createElement("notes-list");
       notesList.notes = notesData;
+
+      notesList.addEventListener("delete", async (event) => {
+        try {
+          const note_id = event.detail;
+
+          await deleteNote(note_id);
+          await displayNotes();
+        } catch (error) {
+          console.error("Failed delete data:", error);
+        }
+      });
+
       notesContainer.appendChild(notesList);
     } catch (error) {
       console.error("Failed to load data:", error);
