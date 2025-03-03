@@ -1,4 +1,4 @@
-import { deleteNote, getNotes } from "../data/notes-data-api.js";
+import { archiveNote, deleteNote, getNotes } from "../data/notes-data-api.js";
 
 const view = async () => {
   const notesContainer = document.querySelector("#notesContainer");
@@ -39,6 +39,19 @@ const view = async () => {
         } catch (error) {
           console.error("Failed delete data:", error);
           notesContainer.innerHTML = "";
+          notesContainer.textContent =
+            "Failed to delete note. Please try again.";
+        }
+      });
+
+      notesList.addEventListener("archive", async (event) => {
+        try {
+          const note_id = event.detail;
+
+          await archiveNote(note_id);
+          await displayNotes();
+        } catch (error) {
+          console.error("Failed archive data:", error);
           notesContainer.textContent =
             "Failed to delete note. Please try again.";
         }

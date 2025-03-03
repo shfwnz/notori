@@ -81,6 +81,12 @@ class NotesList extends HTMLElement {
         this.dispatchEvent(new CustomEvent("delete", { detail: event.detail }));
       });
 
+      noteElement.addEventListener("archive", (event) => {
+        this.dispatchEvent(
+          new CustomEvent("archive", { detail: event.detail })
+        );
+      });
+
       listContainer.appendChild(noteElement);
     });
 

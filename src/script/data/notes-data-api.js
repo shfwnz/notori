@@ -75,4 +75,51 @@ const deleteNote = async (note_id) => {
   }
 };
 
-export { getNotes, addNotes, updateNote, deleteNote };
+const archiveNote = async (note_id) => {
+  try {
+    const response = await fetch(`${baseUrl}/notes/${note_id}/archive`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const responseJson = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseJson.message || "Something went wrong!");
+    }
+
+    console.log("Archive response:", responseJson);
+    return responseJson;
+  } catch (error) {
+    console.error("Failed to archive:", error);
+    alert(error);
+  }
+};
+
+const unarchiveNote = async (note_id) => {
+  try {
+    const response = await fetch(`${baseUrl}/notes/${note_id}/unarchive`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const responseJson = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseJson.message || "Something went wrong!");
+    }
+
+    return responseJson;
+  } catch (error) {
+    console.error("Failed to unarchive:", error);
+  }
+};
+
+export {
+  getNotes,
+  addNotes,
+  updateNote,
+  deleteNote,
+  archiveNote,
+  unarchiveNote,
+};
