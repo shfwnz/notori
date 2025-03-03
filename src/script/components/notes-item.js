@@ -26,8 +26,9 @@ class NotesItem extends HTMLElement {
         color: var(--font);
         padding: 24px;
         width: auto;
-        height: 200px;
+        height: auto;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        position: relative;
       }
 
       .notes-title {
@@ -43,7 +44,49 @@ class NotesItem extends HTMLElement {
       .notes-date {
         font-size: 0.8rem;
         opacity: 0.8;
+        margin-bottom: 8px;
       }
+
+      .notes-archive {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        margin-bottom: 16px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .actions button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .actions button.delete {
+        background-color: #ff4444;
+        color: white;
+      }
+
+      .actions button.edit {
+        background-color: #33b5e5;
+        color: white;
+      }
+
+      .actions button.archive {
+        background-color: #ffbb33;
+        color: white;
+      }
+
+      .actions button.see-more {
+        background-color: #00c851;
+        color: white;
+      }
+
       @media only screen and (max-width: 700px) {
         .card { 
             min-height: 250px;
@@ -67,7 +110,8 @@ class NotesItem extends HTMLElement {
       { day: "numeric", month: "long", year: "numeric" }
     );
 
-    this._shadowRoot.innerHTML = `<div class="card">
+    this._shadowRoot.innerHTML = `
+      <div class="card">
         <div class="notes-info">
             <div class="notes-info__title">
                 <h2>${this._notes.title}</h2>
@@ -76,15 +120,56 @@ class NotesItem extends HTMLElement {
                 <p>${this._notes.body}</p>
             </div>
             <div class="notes-info__create">
-                <p>${formattedDate}</p>
+                <p class="notes-date">${formattedDate}</p>
             </div>
             <div class="notes-info__archive">
-                <p>${this._notes.archived ? "Archived" : "Active"}</p>
+                <p class="notes-archive">${
+                  this._notes.archived ? "Archived" : "Active"
+                }</p>
+            </div>
+            <div class="actions">
+                <button class="delete">Delete</button>
+                <button class="edit">Edit</button>
+                <button class="archive">${
+                  this._notes.archived ? "Unarchive" : "Archive"
+                }</button>
+                <button class="see-more">See More</button>
             </div>
         </div>
-    </div>`;
+      </div>
+    `;
 
     this._shadowRoot.appendChild(this._style);
+
+    // Add event listeners for buttons
+    this._shadowRoot
+      .querySelector(".delete")
+      .addEventListener("click", () => this._handleDelete());
+    this._shadowRoot
+      .querySelector(".edit")
+      .addEventListener("click", () => this._handleEdit());
+    this._shadowRoot
+      .querySelector(".archive")
+      .addEventListener("click", () => this._handleArchive());
+    this._shadowRoot
+      .querySelector(".see-more")
+      .addEventListener("click", () => this._handleSeeMore());
+  }
+
+  _handleDelete() {
+    this.dispatchEvent(new CustomEvent("delete", { detail: this._notes.id }));
+  }
+
+  _handleEdit() {
+    this.dispatchEvent(new CustomEvent("edit", { detail: this._notes.id }));
+  }
+
+  _handleArchive() {
+    this.dispatchEvent(new CustomEvent("archive", { detail: this._notes.id }));
+  }
+
+  _handleSeeMore() {
+    this.dispatchEvent(new CustomEvent("see-more", { detail: this._notes.id }));
   }
 }
 
