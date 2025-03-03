@@ -1,20 +1,29 @@
-import { archiveNote, deleteNote, getNotes } from "../data/notes-data-api.js";
+import {
+  archiveNote,
+  deleteNote,
+  getArchivedNotes,
+  getNotes,
+} from "../data/notes-data-api.js";
 
 const view = async () => {
   const notesContainer = document.querySelector("#notesContainer");
   const addButton = document.querySelector("#add-note-button");
+  const showArchivedButton = document.querySelector("#show-archived-button"); // Tombol baru
+  const showUnarchivedButton = document.querySelector(
+    "#show-unarchived-button"
+  );
   const deleteButton = document.querySelector("#deleteButton");
   const editButton = document.querySelector("#editButton");
   const archiveButton = document.querySelector("#archiveButton");
   const seeMoreButton = document.querySelector("#seeMoreButton");
 
-  const displayNotes = async () => {
+  const displayNotes = async (archived = false) => {
     notesContainer.innerHTML = "";
     const loadingIndicator = document.createElement("loading-indicator");
     notesContainer.appendChild(loadingIndicator);
 
     try {
-      const notesData = await getNotes();
+      const notesData = archived ? await getArchivedNotes() : await getNotes();
 
       if (!Array.isArray(notesData)) {
         throw new Error("Data format is incorrect");
@@ -65,6 +74,14 @@ const view = async () => {
     }
   };
   await displayNotes();
+
+  showArchivedButton.addEventListener("click", async () => {
+    await displayNotes(true);
+  });
+
+  showUnarchivedButton.addEventListener("click", async () => {
+    await displayNotes(false);
+  });
 
   addButton.addEventListener("click", () => {
     const formNotes = document.createElement("form-notes");

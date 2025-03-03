@@ -75,6 +75,22 @@ const deleteNote = async (note_id) => {
   }
 };
 
+const getArchivedNotes = async () => {
+  try {
+    const response = await fetch(`${baseUrl}/notes/archived`);
+    const responseJson = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseJson.message || "Something went wrong!");
+    }
+
+    return responseJson.data || [];
+  } catch (error) {
+    console.log("Error fetching archived notes:", error);
+    return [];
+  }
+};
+
 const archiveNote = async (note_id) => {
   try {
     const response = await fetch(`${baseUrl}/notes/${note_id}/archive`, {
@@ -120,6 +136,7 @@ export {
   addNotes,
   updateNote,
   deleteNote,
+  getArchivedNotes,
   archiveNote,
   unarchiveNote,
 };

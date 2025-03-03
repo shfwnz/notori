@@ -51,6 +51,7 @@ class NotesItem extends HTMLElement {
         font-size: 0.8rem;
         opacity: 0.8;
         margin-bottom: 16px;
+        color: ${this._notes.archived ? "#ff4444" : "#00c851"};
       }
 
       .actions {
@@ -78,7 +79,7 @@ class NotesItem extends HTMLElement {
       }
 
       .actions button.archive {
-        background-color: #ffbb33;
+        background-color: ${this._notes.archived ? "#00c851" : "#ffbb33"};
         color: white;
       }
 
