@@ -1,27 +1,36 @@
-import NotesData from "../data/notes-data.js";
+import { getNotes } from "../data/notes-data-api.js";
 
-const view = () => {
+const view = async () => {
   const notesContainer = document.querySelector("#notesContainer");
   const addButton = document.querySelector("#add-note-button");
 
-  const displayNotes = () => {
+  const displayNotes = async () => {
     notesContainer.innerHTML = "";
 
-    console.log("Data Notes:", NotesData);
+    try {
+      const notesData = await getNotes();
 
-    const notesList = document.createElement("notes-list");
-    notesList.notes = NotesData;
-    notesContainer.appendChild(notesList);
+      if (!Array.isArray(notesData)) {
+        throw new Error("Data format is incorrect");
+      }
+
+      console.log("Data Notes:", notesData);
+
+      const notesList = document.createElement("notes-list");
+      notesList.notes = notesData;
+      notesContainer.appendChild(notesList);
+    } catch (error) {
+      console.error("Failed to load data:", error);
+    }
   };
-  displayNotes();
+  await displayNotes();
 
   addButton.addEventListener("click", () => {
     const formNotes = document.createElement("form-notes");
     document.body.appendChild(formNotes);
 
-    formNotes.addEventListener("add-note", (event) => {
-      const newNote = event.detail;
-      console.log("New Note:", newNote);
+    formNotes.addEventListener("note-added", async () => {
+      await displayNotes();
     });
   });
 };

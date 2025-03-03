@@ -1,3 +1,4 @@
+import { addNotes } from "../data/notes-data-api.js";
 class FormNotes extends HTMLElement {
   constructor() {
     super();
@@ -56,15 +57,20 @@ class FormNotes extends HTMLElement {
     }
 
     const newNote = {
-      id: `notes-${Math.random().toString(36).substring(2, 9)}`,
       title,
       body,
-      createdAt: new Date().toISOString(),
-      archived: false,
     };
 
-    this.dispatchEvent(new CustomEvent("add-note", { detail: newNote }));
-    this._handleClose();
+    addNotes(newNote)
+      .then(() => {
+        alert("Note added!");
+        this.dispatchEvent(new CustomEvent("note-added"));
+        this._handleClose();
+      })
+      .catch((error) => {
+        console.error("Failed to add data:", error);
+        alert("error");
+      });
   }
 
   _handleClose() {
