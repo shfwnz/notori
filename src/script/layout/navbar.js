@@ -1,4 +1,4 @@
-import notes from "../../assets/img/notes.png";
+import notes from "../../assets/img/logo.png";
 
 class Navbar extends HTMLElement {
   _shadowRoot = null;
@@ -12,25 +12,26 @@ class Navbar extends HTMLElement {
 
     this._style.textContent = `
           :host {
-              display: flex;
-              align-items: center;
-              background: var(--primary) !important;
-              color: var(--font) !important;
-              padding: 0px 20px;
-              font-size: 1.5rem;
-              text-align: center;
-              border-radius: 32px;
+            display: flex;
+            padding: 0px 20px;
+            background: var(--primary) !important;
+            color: var(--font) !important;
+            align-items: center;
+            font-size: 1rem;
+            text-align: center;
+            border-style: solid;
+            border-color: black;
           }
     
           .brand-name {
-              display: flex;
-              align-items: center;
-              gap: 10px; 
+            display: flex;
+            align-items: center;
+            gap: 10px; 
           }
     
           .brand-name img {
-              width: 40px; 
-              height: auto;
+            width: 40px; 
+            height: auto;
           }
         `;
 
@@ -41,7 +42,7 @@ class Navbar extends HTMLElement {
     this._shadowRoot.innerHTML = `
         <div class="brand-name">
           <img src="${notes}" alt="Notoria Logo">
-          <h1>Notoria</h1>
+          <h1>Notori</h1>
         </div>
       `;
     this._shadowRoot.appendChild(this._style);

@@ -9,7 +9,7 @@
 }
 
 body {
-  background: var(--primary);
+  background-color: var(--primary);
   color: var(--font);
   margin: 24px;
 }
@@ -20,10 +20,15 @@ header {
   z-index: 99;
 }
 
-main #add-note-button {
-  background: var(--secondary);
+main aside {
+  display: flex;
+  justify-content: space-between;
+}
+
+main aside button {
+  background-color: var(--secondary);
   color: var(--font);
-  margin: 10px 10px;
+
+  margin: 10px 0px;
   padding: 10px;
-  border-radius: 10px;
 }
