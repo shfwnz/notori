@@ -6,6 +6,8 @@ import {
   unarchiveNote,
 } from "../data/notes-data-api.js";
 
+import Swal from "sweetalert2";
+
 const view = async () => {
   const notesContainer = document.querySelector("#notesContainer");
   const addButton = document.querySelector("#add-note-button");
@@ -45,11 +47,21 @@ const view = async () => {
 
           await deleteNote(note_id);
           await displayNotes(false);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Deleting successfull",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
         } catch (error) {
           console.error("Failed delete data:", error);
-          notesContainer.innerHTML = "";
-          notesContainer.textContent =
-            "Failed to delete note. Please try again.";
+          Swal.fire({
+            title: "Error!",
+            text: "Failed delete data!",
+            icon: "error",
+            showConfirmButton: "ok",
+          });
         }
       });
 
