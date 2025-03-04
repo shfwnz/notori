@@ -3,6 +3,7 @@ import {
   deleteNote,
   getArchivedNotes,
   getNotes,
+  unarchiveNote,
 } from "../data/notes-data-api.js";
 
 const view = async () => {
@@ -58,6 +59,19 @@ const view = async () => {
           const note_id = event.detail;
 
           await archiveNote(note_id);
+          await displayNotes();
+        } catch (error) {
+          console.error("Failed archive data:", error);
+          notesContainer.textContent =
+            "Failed to delete note. Please try again.";
+        }
+      });
+
+      notesList.addEventListener("unarchive", async (event) => {
+        try {
+          const note_id = event.detail;
+
+          await unarchiveNote(note_id);
           await displayNotes();
         } catch (error) {
           console.error("Failed archive data:", error);

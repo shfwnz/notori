@@ -149,9 +149,13 @@ class NotesItem extends HTMLElement {
     this._shadowRoot
       .querySelector(".edit")
       .addEventListener("click", () => this._handleEdit());
-    this._shadowRoot
-      .querySelector(".archive")
-      .addEventListener("click", () => this._handleArchive());
+    this._shadowRoot.querySelector(".archive").addEventListener("click", () => {
+      if (this._notes.archived) {
+        this._handleUnarchive();
+      } else {
+        this._handleArchive();
+      }
+    });
     this._shadowRoot
       .querySelector(".see-more")
       .addEventListener("click", () => this._handleSeeMore());
@@ -167,6 +171,12 @@ class NotesItem extends HTMLElement {
 
   _handleArchive() {
     this.dispatchEvent(new CustomEvent("archive", { detail: this._notes.id }));
+  }
+
+  _handleUnarchive() {
+    this.dispatchEvent(
+      new CustomEvent("unarchive", { detail: this._notes.id })
+    );
   }
 
   _handleSeeMore() {
