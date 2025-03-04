@@ -127,7 +127,8 @@ class FormNotes extends HTMLElement {
         .form-container {
           background: var(--secondary);
           padding: 20px;
-          border-radius: 8px;
+          border-style: solid;
+          border-color: black;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           width: 300px;
         }
@@ -167,7 +168,6 @@ class FormNotes extends HTMLElement {
           color: var(--font);
           box-sizing: border-box;
           border: 1px solid #ccc;
-          border-radius: 4px;
         }
   
         .form-group textarea {
@@ -179,14 +179,15 @@ class FormNotes extends HTMLElement {
           width: 100%;
           padding: 10px;
           background: var(--primary);
-          color: white;
-          border: none;
-          border-radius: 4px;
+          color: var(--font);
+          border-style: solid;
+          border-color: black;
           cursor: pointer;
         }
   
         .submit-button:hover {
-          background: var(--background);
+          background: var(--secondary);
+          color: white;
         }
   
         .error-message {
