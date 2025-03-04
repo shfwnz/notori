@@ -13,7 +13,7 @@ const view = async () => {
   const addButton = document.querySelector("#add-note-button");
   const showArchivedButton = document.querySelector("#show-archived-button"); // Tombol baru
   const showUnarchivedButton = document.querySelector(
-    "#show-unarchived-button"
+    "#show-unarchived-button",
   );
 
   const displayNotes = async (archived = false) => {

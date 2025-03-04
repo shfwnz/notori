@@ -4,8 +4,9 @@ Notori is a simple note-taking app built with Webpack and modern JavaScript. Thi
 
 ## 🚀 Features
 
-- Add, edit, and delete notes
+- Add and delete notes
 - Responsive UI with Web Components
+- Animation with sweetalert and animejs
 - Built with Webpack for modularity
 
 ## 🛠 Installation & Running

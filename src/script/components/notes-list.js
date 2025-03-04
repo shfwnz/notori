@@ -83,19 +83,19 @@ class NotesList extends HTMLElement {
 
       noteElement.addEventListener("archive", (event) => {
         this.dispatchEvent(
-          new CustomEvent("archive", { detail: event.detail })
+          new CustomEvent("archive", { detail: event.detail }),
         );
       });
 
       noteElement.addEventListener("unarchive", (event) => {
         this.dispatchEvent(
-          new CustomEvent("unarchive", { detail: event.detail })
+          new CustomEvent("unarchive", { detail: event.detail }),
         );
       });
 
       noteElement.addEventListener("see-more", (event) => {
         this.dispatchEvent(
-          new CustomEvent("see-more", { detail: event.detail })
+          new CustomEvent("see-more", { detail: event.detail }),
         );
       });
 

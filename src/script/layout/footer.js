@@ -53,8 +53,8 @@ class Footer extends HTMLElement {
         <div class="footer-content">
           <div class="footer-copyright">
             &copy; ${new Date().getFullYear()} ${
-      this._companyName
-    }. All rights reserved.
+              this._companyName
+            }. All rights reserved.
           </div>
         </div>
       `;

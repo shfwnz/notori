@@ -93,7 +93,7 @@ class NotesItem extends HTMLElement {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     this.observer.observe(this);
@@ -119,7 +119,7 @@ class NotesItem extends HTMLElement {
   render() {
     const formattedDate = new Date(this._notes.createdAt).toLocaleDateString(
       "id-ID",
-      { day: "numeric", month: "long", year: "numeric" }
+      { day: "numeric", month: "long", year: "numeric" },
     );
 
     this._shadowRoot.innerHTML = `
@@ -169,11 +169,11 @@ class NotesItem extends HTMLElement {
   _handleArchive() {
     if (this._notes.archived) {
       this.dispatchEvent(
-        new CustomEvent("unarchive", { detail: this._notes.id })
+        new CustomEvent("unarchive", { detail: this._notes.id }),
       );
     } else {
       this.dispatchEvent(
-        new CustomEvent("archive", { detail: this._notes.id })
+        new CustomEvent("archive", { detail: this._notes.id }),
       );
     }
   }
