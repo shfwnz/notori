@@ -10,7 +10,10 @@ export default {
   output: { path: path.resolve(__dirname, "dist"), filename: "bundle.js" },
   module: {
     rules: [
-      { test: /\.css$/, use: ["style-loader", "css-loader"] },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader", "postcss-loader"],
+      },
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
         type: "asset/resource",
