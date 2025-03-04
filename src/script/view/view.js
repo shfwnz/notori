@@ -15,10 +15,6 @@ const view = async () => {
   const showUnarchivedButton = document.querySelector(
     "#show-unarchived-button"
   );
-  const deleteButton = document.querySelector("#deleteButton");
-  const editButton = document.querySelector("#editButton");
-  const archiveButton = document.querySelector("#archiveButton");
-  const seeMoreButton = document.querySelector("#seeMoreButton");
 
   const displayNotes = async (archived = false) => {
     const isArchivedView = archived;
@@ -49,16 +45,16 @@ const view = async () => {
           await displayNotes(false);
           Swal.fire({
             title: "Deleted!",
-            text: "Deleting successfull",
+            text: "Deleting successfully",
             icon: "success",
             timer: 1500,
             showConfirmButton: false,
           });
         } catch (error) {
-          console.error("Failed delete data:", error);
+          console.error("Failed delete note:", error);
           Swal.fire({
             title: "Error!",
-            text: "Failed delete data!",
+            text: "Failed delete note!",
             icon: "error",
             showConfirmButton: "ok",
           });
@@ -71,10 +67,21 @@ const view = async () => {
 
           await archiveNote(note_id);
           await displayNotes(isArchivedView);
+          Swal.fire({
+            title: "Archived!",
+            text: "Note Archived",
+            icon: "info",
+            timer: 1500,
+            showConfirmButton: false,
+          });
         } catch (error) {
-          console.error("Failed archive data:", error);
-          notesContainer.textContent =
-            "Failed to delete note. Please try again.";
+          console.error("Failed archive note:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "Failed archive note!",
+            icon: "error",
+            showConfirmButton: "ok",
+          });
         }
       });
 
@@ -84,10 +91,21 @@ const view = async () => {
 
           await unarchiveNote(note_id);
           await displayNotes(isArchivedView);
+          Swal.fire({
+            title: "Unarchived!",
+            text: "Note unarchived",
+            icon: "info",
+            timer: 1500,
+            showConfirmButton: false,
+          });
         } catch (error) {
-          console.error("Failed archive data:", error);
-          notesContainer.textContent =
-            "Failed to delete note. Please try again.";
+          console.error("Failed unarchive note:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "Failed unarchive note!",
+            icon: "error",
+            showConfirmButton: "ok",
+          });
         }
       });
 
@@ -113,10 +131,27 @@ const view = async () => {
     document.body.appendChild(formNotes);
 
     formNotes.addEventListener("note-added", async () => {
-      const loadingIndicator = document.createElement("loading-indicator");
-      notesContainer.appendChild(loadingIndicator);
+      try {
+        const loadingIndicator = document.createElement("loading-indicator");
+        notesContainer.appendChild(loadingIndicator);
 
-      await displayNotes();
+        await displayNotes();
+        Swal.fire({
+          title: "added!",
+          text: "Note added",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      } catch (error) {
+        console.error("Failed insert note:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed insert note!",
+          icon: "error",
+          showConfirmButton: "ok",
+        });
+      }
     });
   });
 };

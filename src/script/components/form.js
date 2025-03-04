@@ -63,7 +63,6 @@ class FormNotes extends HTMLElement {
 
     addNotes(newNote)
       .then(() => {
-        alert("Note added!");
         this.dispatchEvent(new CustomEvent("note-added"));
         this._handleClose();
       })
