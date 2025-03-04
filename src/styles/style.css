@@ -1,10 +1,7 @@
-@import "tailwindcss";
-
 :root {
-  --primary: #393e46;
-  --secondary: #00adb5;
-  --background: #222831;
-  --font: #eeeeee;
+  --primary: #f7f7f7;
+  --secondary: #c4c4c4;
+  --font: #393e46;
 }
 
 * {
@@ -12,7 +9,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--primary);
   color: var(--font);
   margin: 24px;
 }

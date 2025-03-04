@@ -17,8 +17,6 @@ class NotesItem extends HTMLElement {
     this._style.textContent = `
       :host {
         display: block;
-        border-radius: 24px;
-        overflow: hidden;
       }
 
       .card {
@@ -27,7 +25,9 @@ class NotesItem extends HTMLElement {
         padding: 24px;
         width: auto;
         height: auto;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-color: black;
+        box-shadow: 5px 7px black;
         position: relative;
       }
 
@@ -51,7 +51,6 @@ class NotesItem extends HTMLElement {
         font-size: 0.8rem;
         opacity: 0.8;
         margin-bottom: 16px;
-        color: ${this._notes.archived ? "#ff4444" : "#00c851"};
       }
 
       .actions {
@@ -61,31 +60,17 @@ class NotesItem extends HTMLElement {
       }
 
       .actions button {
+        font-weight: bold;
+        color: var(--font);
+        background-color: var(--secondary);
+
         padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
+
+        border-style: solid;
+        border-color: black;
+        
         cursor: pointer;
         font-size: 0.9rem;
-      }
-
-      .actions button.delete {
-        background-color: #ff4444;
-        color: white;
-      }
-
-      .actions button.edit {
-        background-color: #33b5e5;
-        color: white;
-      }
-
-      .actions button.archive {
-        background-color: ${this._notes.archived ? "#00c851" : "#ffbb33"};
-        color: white;
-      }
-
-      .actions button.see-more {
-        background-color: #00c851;
-        color: white;
       }
 
       @media only screen and (max-width: 700px) {
@@ -141,21 +126,15 @@ class NotesItem extends HTMLElement {
     `;
 
     this._shadowRoot.appendChild(this._style);
-
-    // Add event listeners for buttons
     this._shadowRoot
       .querySelector(".delete")
       .addEventListener("click", () => this._handleDelete());
     this._shadowRoot
       .querySelector(".edit")
       .addEventListener("click", () => this._handleEdit());
-    this._shadowRoot.querySelector(".archive").addEventListener("click", () => {
-      if (this._notes.archived) {
-        this._handleUnarchive();
-      } else {
-        this._handleArchive();
-      }
-    });
+    this._shadowRoot
+      .querySelector(".archive")
+      .addEventListener("click", () => this._handleArchive());
     this._shadowRoot
       .querySelector(".see-more")
       .addEventListener("click", () => this._handleSeeMore());
@@ -171,12 +150,6 @@ class NotesItem extends HTMLElement {
 
   _handleArchive() {
     this.dispatchEvent(new CustomEvent("archive", { detail: this._notes.id }));
-  }
-
-  _handleUnarchive() {
-    this.dispatchEvent(
-      new CustomEvent("unarchive", { detail: this._notes.id })
-    );
   }
 
   _handleSeeMore() {
