@@ -19,6 +19,7 @@ const view = async () => {
   const seeMoreButton = document.querySelector("#seeMoreButton");
 
   const displayNotes = async (archived = false) => {
+    const isArchivedView = archived;
     notesContainer.innerHTML = "";
     const loadingIndicator = document.createElement("loading-indicator");
     notesContainer.appendChild(loadingIndicator);
@@ -43,9 +44,7 @@ const view = async () => {
           notesContainer.appendChild(loadingIndicator);
 
           await deleteNote(note_id);
-          await displayNotes();
-
-          notesContainer.innerHTML = "";
+          await displayNotes(isArchivedView);
         } catch (error) {
           console.error("Failed delete data:", error);
           notesContainer.innerHTML = "";
@@ -59,7 +58,7 @@ const view = async () => {
           const note_id = event.detail;
 
           await archiveNote(note_id);
-          await displayNotes();
+          await displayNotes(isArchivedView);
         } catch (error) {
           console.error("Failed archive data:", error);
           notesContainer.textContent =
@@ -72,7 +71,7 @@ const view = async () => {
           const note_id = event.detail;
 
           await unarchiveNote(note_id);
-          await displayNotes();
+          await displayNotes(isArchivedView);
         } catch (error) {
           console.error("Failed archive data:", error);
           notesContainer.textContent =
