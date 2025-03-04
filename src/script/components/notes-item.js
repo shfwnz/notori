@@ -149,7 +149,15 @@ class NotesItem extends HTMLElement {
   }
 
   _handleArchive() {
-    this.dispatchEvent(new CustomEvent("archive", { detail: this._notes.id }));
+    if (this._notes.archived) {
+      this.dispatchEvent(
+        new CustomEvent("unarchive", { detail: this._notes.id })
+      );
+    } else {
+      this.dispatchEvent(
+        new CustomEvent("archive", { detail: this._notes.id })
+      );
+    }
   }
 
   _handleSeeMore() {

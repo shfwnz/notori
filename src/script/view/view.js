@@ -44,7 +44,7 @@ const view = async () => {
           notesContainer.appendChild(loadingIndicator);
 
           await deleteNote(note_id);
-          await displayNotes(isArchivedView);
+          await displayNotes(false);
         } catch (error) {
           console.error("Failed delete data:", error);
           notesContainer.innerHTML = "";
@@ -105,8 +105,6 @@ const view = async () => {
       notesContainer.appendChild(loadingIndicator);
 
       await displayNotes();
-
-      notesContainer.innerHTML = "";
     });
   });
 };
