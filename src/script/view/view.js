@@ -54,7 +54,7 @@ const view = async () => {
           console.error("Failed delete note:", error);
           Swal.fire({
             title: "Error!",
-            text: "Failed delete note!",
+            text: "Failed delete note",
             icon: "error",
             showConfirmButton: "ok",
           });
@@ -78,7 +78,7 @@ const view = async () => {
           console.error("Failed archive note:", error);
           Swal.fire({
             title: "Error!",
-            text: "Failed archive note!",
+            text: "Failed archive note",
             icon: "error",
             showConfirmButton: "ok",
           });
@@ -102,7 +102,27 @@ const view = async () => {
           console.error("Failed unarchive note:", error);
           Swal.fire({
             title: "Error!",
-            text: "Failed unarchive note!",
+            text: "Failed unarchive note",
+            icon: "error",
+            showConfirmButton: "ok",
+          });
+        }
+      });
+
+      notesList.addEventListener("see-more", async (event) => {
+        try {
+          Swal.fire({
+            title: "TBA!",
+            text: "hehe",
+            icon: "info",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        } catch (error) {
+          console.error("error:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to load content",
             icon: "error",
             showConfirmButton: "ok",
           });
@@ -111,9 +131,13 @@ const view = async () => {
 
       notesContainer.appendChild(notesList);
     } catch (error) {
-      console.error("Failed to load data:", error);
-      notesContainer.innerHTML = "";
-      notesContainer.textContent = "Failed to load notes. Please try again.";
+      console.error("Failed to load notes:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to load notes",
+        icon: "error",
+        showConfirmButton: "ok",
+      });
     }
   };
   await displayNotes();
@@ -147,7 +171,7 @@ const view = async () => {
         console.error("Failed insert note:", error);
         Swal.fire({
           title: "Error!",
-          text: "Failed insert note!",
+          text: "Failed insert note",
           icon: "error",
           showConfirmButton: "ok",
         });

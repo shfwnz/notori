@@ -1,3 +1,4 @@
+import anime from "animejs/lib/anime.es.js";
 class NotesItem extends HTMLElement {
   _shadowRoot = null;
   _style = null;
@@ -82,12 +83,37 @@ class NotesItem extends HTMLElement {
 
     this._shadowRoot.appendChild(this._style);
     this.render();
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.animateCard();
+            this.observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    this.observer.observe(this);
   }
 
   set notes(value) {
     console.log("Received notes:", value);
     this._notes = value;
     this.render();
+  }
+
+  animateCard() {
+    anime({
+      targets: this,
+      opacity: [0, 1],
+      translateY: [100, 0],
+      translateX: [-100, 0],
+      duration: 1000,
+      easing: "easeOutExpo",
+    });
   }
 
   render() {
@@ -115,7 +141,6 @@ class NotesItem extends HTMLElement {
             </div>
             <div class="actions">
                 <button id="deleteButton" class="delete">Delete</button>
-                <button id="editButton" class="edit">Edit</button>
                 <button id="archiveButton" class="archive">${
                   this._notes.archived ? "Unarchive" : "Archive"
                 }</button>
@@ -130,9 +155,6 @@ class NotesItem extends HTMLElement {
       .querySelector(".delete")
       .addEventListener("click", () => this._handleDelete());
     this._shadowRoot
-      .querySelector(".edit")
-      .addEventListener("click", () => this._handleEdit());
-    this._shadowRoot
       .querySelector(".archive")
       .addEventListener("click", () => this._handleArchive());
     this._shadowRoot
@@ -142,10 +164,6 @@ class NotesItem extends HTMLElement {
 
   _handleDelete() {
     this.dispatchEvent(new CustomEvent("delete", { detail: this._notes.id }));
-  }
-
-  _handleEdit() {
-    this.dispatchEvent(new CustomEvent("edit", { detail: this._notes.id }));
   }
 
   _handleArchive() {

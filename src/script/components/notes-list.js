@@ -93,6 +93,12 @@ class NotesList extends HTMLElement {
         );
       });
 
+      noteElement.addEventListener("see-more", (event) => {
+        this.dispatchEvent(
+          new CustomEvent("see-more", { detail: event.detail })
+        );
+      });
+
       listContainer.appendChild(noteElement);
     });
 

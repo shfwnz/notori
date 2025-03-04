@@ -36,26 +36,6 @@ const addNotes = async (note) => {
   }
 };
 
-const updateNote = async (note_id, updatedNote) => {
-  try {
-    const response = await fetch(`${baseUrl}/notes/${note_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedNote),
-    });
-
-    const responseJson = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseJson.message || "Something went wrong!");
-    }
-
-    return responseJson.data;
-  } catch (error) {
-    console.error("Failed to update data:", error);
-  }
-};
-
 const deleteNote = async (note_id) => {
   try {
     const response = await fetch(`${baseUrl}/notes/${note_id}`, {
@@ -134,7 +114,6 @@ const unarchiveNote = async (note_id) => {
 export {
   getNotes,
   addNotes,
-  updateNote,
   deleteNote,
   getArchivedNotes,
   archiveNote,
