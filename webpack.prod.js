@@ -11,7 +11,7 @@ export default merge(common, {
         use: [
           {
             loader: "babel-loader",
-            options: { presents: ["@babel/present-enc"] },
+            options: { presets: ["@babel/preset-env"] },
           },
         ],
       },
