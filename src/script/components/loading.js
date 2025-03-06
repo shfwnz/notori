@@ -5,7 +5,9 @@ class LoadingIndicator extends HTMLElement {
     this.shadowRoot.innerHTML = `
         <style>
           :host {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px; /* Memberikan jarak antara spinner dan teks */
           }
           .loader {
             border: 4px solid #f3f3f3;
@@ -15,12 +17,18 @@ class LoadingIndicator extends HTMLElement {
             height: 30px;
             animation: spin 1s linear infinite;
           }
+          .loading-text {
+            font-size: 16px;
+            color: #555; /* Warna abu-abu */
+            font-weight: bold;
+          }
           @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
         </style>
         <div class="loader"></div>
+        <span class="loading-text">Loading...</span>
       `;
   }
 }

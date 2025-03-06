@@ -11,15 +11,14 @@ import Swal from "sweetalert2";
 const view = async () => {
   const notesContainer = document.querySelector("#notesContainer");
   const addButton = document.querySelector("#add-note-button");
-  const showArchivedButton = document.querySelector("#show-archived-button"); // Tombol baru
+  const showArchivedButton = document.querySelector("#show-archived-button");
   const showUnarchivedButton = document.querySelector(
     "#show-unarchived-button",
   );
+  const loadingIndicator = document.createElement("loading-indicator");
 
   const displayNotes = async (archived = false) => {
-    const isArchivedView = archived;
     notesContainer.innerHTML = "";
-    const loadingIndicator = document.createElement("loading-indicator");
     notesContainer.appendChild(loadingIndicator);
 
     try {
@@ -38,11 +37,12 @@ const view = async () => {
         try {
           const note_id = event.detail;
 
-          const loadingIndicator = document.createElement("loading-indicator");
+          notesContainer.innerHTML = "";
           notesContainer.appendChild(loadingIndicator);
 
           await deleteNote(note_id);
-          await displayNotes(false);
+          await displayNotes(archived);
+
           Swal.fire({
             title: "Deleted!",
             text: "Deleting successfully",
@@ -65,8 +65,12 @@ const view = async () => {
         try {
           const note_id = event.detail;
 
+          notesContainer.innerHTML = "";
+          notesContainer.appendChild(loadingIndicator);
+
           await archiveNote(note_id);
-          await displayNotes(isArchivedView);
+          await displayNotes(archived);
+
           Swal.fire({
             title: "Archived!",
             text: "Note Archived",
@@ -89,8 +93,12 @@ const view = async () => {
         try {
           const note_id = event.detail;
 
+          notesContainer.innerHTML = "";
+          notesContainer.appendChild(loadingIndicator);
+
           await unarchiveNote(note_id);
-          await displayNotes(isArchivedView);
+          await displayNotes(archived);
+
           Swal.fire({
             title: "Unarchived!",
             text: "Note unarchived",
@@ -109,26 +117,6 @@ const view = async () => {
         }
       });
 
-      notesList.addEventListener("see-more", async (event) => {
-        try {
-          Swal.fire({
-            title: "TBA!",
-            text: "hehe",
-            icon: "info",
-            timer: 1500,
-            showConfirmButton: false,
-          });
-        } catch (error) {
-          console.error("error:", error);
-          Swal.fire({
-            title: "Error!",
-            text: "Failed to load content",
-            icon: "error",
-            showConfirmButton: "ok",
-          });
-        }
-      });
-
       notesContainer.appendChild(notesList);
     } catch (error) {
       console.error("Failed to load notes:", error);
@@ -140,6 +128,7 @@ const view = async () => {
       });
     }
   };
+
   await displayNotes();
 
   showArchivedButton.addEventListener("click", async () => {
@@ -156,12 +145,13 @@ const view = async () => {
 
     formNotes.addEventListener("note-added", async () => {
       try {
-        const loadingIndicator = document.createElement("loading-indicator");
+        notesContainer.innerHTML = "";
         notesContainer.appendChild(loadingIndicator);
 
         await displayNotes();
+
         Swal.fire({
-          title: "added!",
+          title: "Added!",
           text: "Note added",
           icon: "success",
           timer: 1500,
