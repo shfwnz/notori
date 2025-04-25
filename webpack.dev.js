@@ -6,7 +6,7 @@ export default merge(common, {
   mode: "development",
   devServer: {
     static: {
-      directory: path.resolve(process.cwd(), "dist"),
+      directory: path.resolve(process.cwd(), "public"),
     },
     watchFiles: ["index.html", "src/**/*"],
     open: true,
